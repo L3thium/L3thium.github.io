@@ -35,3 +35,18 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     console.error("Error adding player: ", error);
   }
 });
+async function displayPlayers() {
+  const playersUl = document.getElementById("players-ul");
+  playersUl.innerHTML = ""; // clear current list
+
+  const querySnapshot = await getDocs(playersRef);
+  querySnapshot.forEach((doc) => {
+    const player = doc.data();
+    const li = document.createElement("li");
+    li.textContent = `${player.firstName} ${player.lastName} - Wins: ${player.wins}, Losses: ${player.losses}`;
+    playersUl.appendChild(li);
+  });
+}
+
+// Call displayPlayers when page loads
+displayPlayers();
